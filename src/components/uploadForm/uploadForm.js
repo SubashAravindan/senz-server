@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { AES } from 'crypto-js';
 import './uploadForm.css';
-import { API_URL } from '../../config';
+import { API_URL, encryptionKey } from '../../config';
 
 class UploadForm extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class UploadForm extends Component {
         success: false
       });
     } else {
-      this.setState({ file, error: null });
+      this.setState({ file, error: null, success: false });
     }
   };
 
@@ -40,8 +41,9 @@ class UploadForm extends Component {
     }
     const reader = new FileReader();
     reader.onloadend = async () => {
+      const buffer = JSON.stringify(new Uint8Array(reader.result));
       const data = {
-        imagebuff: JSON.stringify(new Uint8Array(reader.result)),
+        imagebuff: AES.encrypt(buffer, encryptionKey).toString(),
         fileName: this.state.file.name
       };
       const res = await axios({
