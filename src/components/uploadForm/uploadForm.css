@@ -1,0 +1,17 @@
+.upload-form-container {
+  margin-top: 200px !important;
+  width: 40% !important;
+  padding: 40px !important;
+}
+
+.upload-form-container .header {
+  margin: 20px;
+}
+
+.upload-form-container .green {
+  color: green;
+}
+
+.upload-form-container .red {
+  color: red;
+}
